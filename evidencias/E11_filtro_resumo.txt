@@ -1,0 +1,89 @@
+### Q15 - resumo ANTES da reserva noturna
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/api/reservas/resumo
+< HTTP 200 OK
+< content-type: application/json
+< content-length: 55
+< {
+<   "total": 2,
+<   "por_turno": {
+<     "manha": 1,
+<     "tarde": 1,
+<     "noite": 0
+<   }
+< }
+
+### Q15 - criação de reserva noturna
+[2026-11-04 22:04:10]
+> POST http://127.0.0.1:8000/api/reservas
+> Content-Type: application/json
+> {"laboratorio": "Laboratório 303", "data_reserva": "2026-11-14", "turno": "noite", "responsavel": "Turma Noturna", "quantidade_pessoas": 20, "finalidade": "Aula prática Full Stack"}
+< HTTP 201 Created
+< content-type: application/json
+< content-length: 179
+< {
+<   "laboratorio": "Laboratório 303",
+<   "data_reserva": "2026-11-14",
+<   "turno": "noite",
+<   "responsavel": "Turma Noturna",
+<   "quantidade_pessoas": 20,
+<   "finalidade": "Aula prática Full Stack",
+<   "id": 4
+< }
+
+### Q15 - resumo DEPOIS da reserva noturna
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/api/reservas/resumo
+< HTTP 200 OK
+< content-type: application/json
+< content-length: 55
+< {
+<   "total": 3,
+<   "por_turno": {
+<     "manha": 1,
+<     "tarde": 1,
+<     "noite": 1
+<   }
+< }
+
+### Q14 - filtro por turno (query string)
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/api/reservas?turno=noite
+< HTTP 200 OK
+< content-type: application/json
+< content-length: 181
+< [
+<   {
+<     "laboratorio": "Laboratório 303",
+<     "data_reserva": "2026-11-14",
+<     "turno": "noite",
+<     "responsavel": "Turma Noturna",
+<     "quantidade_pessoas": 20,
+<     "finalidade": "Aula prática Full Stack",
+<     "id": 4
+<   }
+< ]
+
+### Q14 - filtro por turno inválido (enum)
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/api/reservas?turno=madrugada
+< HTTP 422 Unprocessable Content
+< content-type: application/json
+< content-length: 173
+< {
+<   "detail": [
+<     {
+<       "type": "enum",
+<       "loc": [
+<         "query",
+<         "turno"
+<       ],
+<       "msg": "Input should be 'manha', 'tarde' or 'noite'",
+<       "input": "madrugada",
+<       "ctx": {
+<         "expected": "'manha', 'tarde' or 'noite'"
+<       }
+<     }
+<   ]
+< }
+

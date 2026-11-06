@@ -1,0 +1,30 @@
+### Q11 - primeira tentativa
+[2026-11-04 22:04:10]
+> POST http://127.0.0.1:8000/api/reservas
+> Content-Type: application/json
+> {"laboratorio": "Laboratório 202", "data_reserva": "2026-11-12", "turno": "tarde", "responsavel": "Grupo A", "quantidade_pessoas": 20, "finalidade": "Aula prática Full Stack"}
+< HTTP 201 Created
+< content-type: application/json
+< content-length: 173
+< {
+<   "laboratorio": "Laboratório 202",
+<   "data_reserva": "2026-11-12",
+<   "turno": "tarde",
+<   "responsavel": "Grupo A",
+<   "quantidade_pessoas": 20,
+<   "finalidade": "Aula prática Full Stack",
+<   "id": 2
+< }
+
+### Q11 - segunda tentativa (mesmo lab/data/turno)
+[2026-11-04 22:04:10]
+> POST http://127.0.0.1:8000/api/reservas
+> Content-Type: application/json
+> {"laboratorio": "Laboratório 202", "data_reserva": "2026-11-12", "turno": "tarde", "responsavel": "Grupo B", "quantidade_pessoas": 20, "finalidade": "Aula prática Full Stack"}
+< HTTP 409 Conflict
+< content-type: application/json
+< content-length: 68
+< {
+<   "detail": "Conflito: laboratório já reservado nessa data e turno"
+< }
+

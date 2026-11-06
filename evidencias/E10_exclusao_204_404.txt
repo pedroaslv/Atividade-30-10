@@ -1,0 +1,36 @@
+### Q13 - criação da reserva a excluir
+[2026-11-04 22:04:10]
+> POST http://127.0.0.1:8000/api/reservas
+> Content-Type: application/json
+> {"laboratorio": "Laboratório 505", "data_reserva": "2026-11-13", "turno": "manha", "responsavel": "Grupo A", "quantidade_pessoas": 20, "finalidade": "Aula prática Full Stack"}
+< HTTP 201 Created
+< content-type: application/json
+< content-length: 173
+< {
+<   "laboratorio": "Laboratório 505",
+<   "data_reserva": "2026-11-13",
+<   "turno": "manha",
+<   "responsavel": "Grupo A",
+<   "quantidade_pessoas": 20,
+<   "finalidade": "Aula prática Full Stack",
+<   "id": 3
+< }
+
+### Q13 - DELETE
+[2026-11-04 22:04:10]
+> DELETE http://127.0.0.1:8000/api/reservas/3
+< HTTP 204 No Content
+< content-type: (ausente)
+< content-length: (ausente)
+< (corpo vazio)
+
+### Q13 - consulta após exclusão
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/api/reservas/3
+< HTTP 404 Not Found
+< content-type: application/json
+< content-length: 36
+< {
+<   "detail": "Reserva não encontrada"
+< }
+

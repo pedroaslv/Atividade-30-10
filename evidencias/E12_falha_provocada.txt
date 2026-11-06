@@ -1,0 +1,38 @@
+### Q20 - alteração temporária (linha 3 de tests/test_api.py)
+    assert criada.status_code == 200
+
+### python -m pytest -v tests/test_api.py::test_fluxo_criar_consultar_atualizar_excluir
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-8.4.2, pluggy-1.7.0 -- C:\Users\deugn\Downloads\atividade_fs\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\deugn\Downloads\atividade_fs
+configfile: pytest.ini
+plugins: anyio-4.16.0, cov-6.3.0
+collecting ... collected 1 item
+
+tests/test_api.py::test_fluxo_criar_consultar_atualizar_excluir FAILED   [100%]
+
+================================== FAILURES ===================================
+________________ test_fluxo_criar_consultar_atualizar_excluir _________________
+
+client = <starlette.testclient.TestClient object at 0x0000019B056F7770>
+reserva_valida = {'data_reserva': '2026-11-10', 'finalidade': 'Aula pr�tica de integra��o', 'laboratorio': 'Laborat�rio 101', 'quantidade_pessoas': 20, ...}
+
+    def test_fluxo_criar_consultar_atualizar_excluir(client, reserva_valida):
+        criada = client.post("/api/reservas", json=reserva_valida)
+>       assert criada.status_code == 200
+E       assert 201 == 200
+E        +  where 201 = <Response [201 Created]>.status_code
+
+tests\test_api.py:3: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_api.py::test_fluxo_criar_consultar_atualizar_excluir - asse...
+============================== 1 failed in 0.26s ==============================
+
+### Restauração: diff contra o original (vazio = idêntico)
+(sem diferenças)
+    assert criada.status_code == 201
+
+### Reexecução após restaurar
+.......                                                                  [100%]
+7 passed in 0.33s

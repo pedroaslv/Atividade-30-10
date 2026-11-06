@@ -1,0 +1,62 @@
+GET http://127.0.0.1:8000/openapi.json -> HTTP 200
+Título: API de Reservas de Laboratórios  versão 1.0.0
+
+Rotas documentadas:
+  GET    /api/reservas                    Listar Reservas        respostas: 200, 422
+  POST   /api/reservas                    Criar Reserva          respostas: 201, 422
+  GET    /api/reservas/resumo             Obter Resumo           respostas: 200
+  GET    /api/reservas/{reserva_id}       Consultar Reserva      respostas: 200, 422
+  PUT    /api/reservas/{reserva_id}       Atualizar Reserva      respostas: 200, 422
+  DELETE /api/reservas/{reserva_id}       Excluir Reserva        respostas: 204, 422
+
+Contrato do POST /api/reservas:
+  requestBody: {"$ref": "#/components/schemas/ReservaEntrada"}
+  respostas: {"201": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ReservaSaida"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}
+
+Schema ReservaEntrada:
+{
+  "properties": {
+    "laboratorio": {
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 3,
+      "title": "Laboratorio"
+    },
+    "data_reserva": {
+      "type": "string",
+      "format": "date",
+      "title": "Data Reserva"
+    },
+    "turno": {
+      "$ref": "#/components/schemas/Turno"
+    },
+    "responsavel": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 3,
+      "title": "Responsavel"
+    },
+    "quantidade_pessoas": {
+      "type": "integer",
+      "maximum": 40.0,
+      "minimum": 1.0,
+      "title": "Quantidade Pessoas"
+    },
+    "finalidade": {
+      "type": "string",
+      "maxLength": 160,
+      "minLength": 5,
+      "title": "Finalidade"
+    }
+  },
+  "type": "object",
+  "required": [
+    "laboratorio",
+    "data_reserva",
+    "turno",
+    "responsavel",
+    "quantidade_pessoas",
+    "finalidade"
+  ],
+  "title": "ReservaEntrada"
+}

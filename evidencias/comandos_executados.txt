@@ -1,0 +1,58 @@
+COMANDOS EXECUTADOS — Projeto Integrador Full Stack (Reservas de Laboratórios)
+Data: 04/11/2026   Ambiente: Windows 11, Python 3.13.14, PowerShell / Git Bash
+=============================================================================
+
+# 1. Preparação do ambiente
+python --version                                   # Python 3.13.14
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+#   fastapi 0.162.0 | uvicorn 0.54.0 | pydantic 2.14.2 | pytest 8.4.2 | pytest-cov 6.3.0 | httpx 0.28.1
+
+# 2. Inicialização (E01 / Q1)
+python -m uvicorn backend.app.main:app --reload
+#   -> "Uvicorn running on http://127.0.0.1:8000" / "Application startup complete."
+
+# 3. Interface e Swagger (E02, E03 / Q2, Q5)
+#   navegador: http://127.0.0.1:8000/        -> E02_interface.png
+#   navegador: http://127.0.0.1:8000/docs    -> E03_swagger.png
+#   GET http://127.0.0.1:8000/openapi.json   -> E03_swagger_rotas.txt
+
+# 4. Chamadas à API (E04–E11 / Q6–Q15) — equivalentes em PowerShell:
+$h = @{ "Content-Type" = "application/json" }
+$r = '{"laboratorio":"Laboratório 101","data_reserva":"2026-11-10","turno":"manha","responsavel":"Grupo A","quantidade_pessoas":20,"finalidade":"Aula prática Full Stack"}'
+Invoke-WebRequest -Method POST   http://127.0.0.1:8000/api/reservas -Headers $h -Body $r          # 201 (E04)
+#   mesmo corpo com "quantidade_pessoas":0                                                     # 422 (E05)
+Invoke-WebRequest http://127.0.0.1:8000/api/reservas/9999                                       # 404 (E06)
+#   POST Laboratório 202 / 2026-11-12 / tarde  -> 201 ; repetido -> 409                         # (E08)
+Invoke-WebRequest -Method PUT    http://127.0.0.1:8000/api/reservas/2 -Headers $h -Body <json com responsavel "Grupo C">   # 200 (E09)
+Invoke-WebRequest -Method DELETE http://127.0.0.1:8000/api/reservas/3                           # 204 (E10)
+Invoke-WebRequest http://127.0.0.1:8000/api/reservas/3                                          # 404 (E10)
+Invoke-WebRequest http://127.0.0.1:8000/api/reservas/resumo                                     # antes: total 2 (E11)
+#   POST Laboratório 303 / 2026-11-14 / noite -> 201
+Invoke-WebRequest http://127.0.0.1:8000/api/reservas/resumo                                     # depois: total 3, noite 1 (E11)
+Invoke-WebRequest "http://127.0.0.1:8000/api/reservas?turno=noite"                              # 1 resultado (E11)
+Invoke-WebRequest "http://127.0.0.1:8000/api/reservas?turno=madrugada"                          # 422 (enum)
+#   (requisições e respostas registradas nos arquivos E0x_*.txt)
+
+# 5. Persistência (E07 / Q10)
+Invoke-WebRequest http://127.0.0.1:8000/api/reservas/1                                          # 200 antes
+#   CTRL+C no terminal do Uvicorn (processo encerrado; porta 8000 livre)
+python -m uvicorn backend.app.main:app
+Invoke-WebRequest http://127.0.0.1:8000/api/reservas/1                                          # 200 depois, mesmo JSON
+
+# 6. Testes (E12 / Q16–Q22)
+Get-FileHash dados\reservas.db                     # SHA-256 antes: 701d92f4...3df9
+python -m pytest -v                                # 7 passed in 0.34s
+Get-FileHash dados\reservas.db                     # SHA-256 depois: 701d92f4...3df9 (idêntico)
+python -m pytest --cov=backend.app --cov-report=term-missing   # TOTAL 94%
+
+# 7. Falha provocada (Q20)
+#   tests/test_api.py linha 3: "== 201" alterado temporariamente para "== 200"
+python -m pytest -v tests/test_api.py::test_fluxo_criar_consultar_atualizar_excluir   # FAILED: assert 201 == 200
+#   linha restaurada para "== 201"
+python -m pytest -q                                # 7 passed
+
+# 8. Validação dos cenários propostos na Q21
+#   4 testes novos (ver Q21)
+python -m pytest --cov=backend.app --cov-report=term-missing   # 11 passed, TOTAL 100%

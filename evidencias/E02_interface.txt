@@ -1,0 +1,16 @@
+### Q2 - interface servida pela raiz
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/
+< HTTP 200 OK
+< content-type: text/html; charset=utf-8
+< content-length: 1980
+< (corpo não-JSON, 1980 bytes) <!doctype html> <html lang="pt-BR"> <head>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,...
+
+### Q2 - arquivo estático do frontend
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/static/app.js
+< HTTP 200 OK
+< content-type: text/javascript; charset=utf-8
+< content-length: 2954
+< (corpo não-JSON, 2954 bytes) const api = "/api/reservas"; const $ = (seletor) => document.querySelector(seletor);  function dadosDoFormulario() {   r...
+

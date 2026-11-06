@@ -1,0 +1,68 @@
+### Q10 - consulta ANTES de reiniciar
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/api/reservas/1
+< HTTP 200 OK
+< content-type: application/json
+< content-length: 173
+< {
+<   "laboratorio": "Laboratório 101",
+<   "data_reserva": "2026-11-10",
+<   "turno": "manha",
+<   "responsavel": "Grupo A",
+<   "quantidade_pessoas": 20,
+<   "finalidade": "Aula prática Full Stack",
+<   "id": 1
+< }
+
+### Q10 - consulta DEPOIS de reiniciar o servidor
+[2026-11-04 22:04:56]
+> GET http://127.0.0.1:8000/api/reservas/1
+< HTTP 200 OK
+< content-type: application/json
+< content-length: 173
+< {
+<   "laboratorio": "Laboratório 101",
+<   "data_reserva": "2026-11-10",
+<   "turno": "manha",
+<   "responsavel": "Grupo A",
+<   "quantidade_pessoas": 20,
+<   "finalidade": "Aula prática Full Stack",
+<   "id": 1
+< }
+
+### Q10 - listagem completa após reinício
+[2026-11-04 22:04:56]
+> GET http://127.0.0.1:8000/api/reservas
+< HTTP 200 OK
+< content-type: application/json
+< content-length: 529
+< [
+<   {
+<     "laboratorio": "Laboratório 101",
+<     "data_reserva": "2026-11-10",
+<     "turno": "manha",
+<     "responsavel": "Grupo A",
+<     "quantidade_pessoas": 20,
+<     "finalidade": "Aula prática Full Stack",
+<     "id": 1
+<   },
+<   {
+<     "laboratorio": "Laboratório 202",
+<     "data_reserva": "2026-11-12",
+<     "turno": "tarde",
+<     "responsavel": "Grupo C",
+<     "quantidade_pessoas": 20,
+<     "finalidade": "Aula prática Full Stack",
+<     "id": 2
+<   },
+<   {
+<     "laboratorio": "Laboratório 303",
+<     "data_reserva": "2026-11-14",
+<     "turno": "noite",
+<     "responsavel": "Turma Noturna",
+<     "quantidade_pessoas": 20,
+<     "finalidade": "Aula prática Full Stack",
+<     "id": 4
+<   }
+< ]
+

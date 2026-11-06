@@ -1,0 +1,25 @@
+### Q8 - quantidade_pessoas = 0
+[2026-11-04 22:04:10]
+> POST http://127.0.0.1:8000/api/reservas
+> Content-Type: application/json
+> {"laboratorio": "Laboratório 404", "data_reserva": "2026-11-10", "turno": "manha", "responsavel": "Grupo A", "quantidade_pessoas": 0, "finalidade": "Aula prática Full Stack"}
+< HTTP 422 Unprocessable Content
+< content-type: application/json
+< content-length: 154
+< {
+<   "detail": [
+<     {
+<       "type": "greater_than_equal",
+<       "loc": [
+<         "body",
+<         "quantidade_pessoas"
+<       ],
+<       "msg": "Input should be greater than or equal to 1",
+<       "input": 0,
+<       "ctx": {
+<         "ge": 1
+<       }
+<     }
+<   ]
+< }
+

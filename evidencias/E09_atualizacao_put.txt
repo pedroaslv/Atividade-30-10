@@ -1,0 +1,34 @@
+### Q12 - estado antes do PUT
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/api/reservas/2
+< HTTP 200 OK
+< content-type: application/json
+< content-length: 173
+< {
+<   "laboratorio": "Laboratório 202",
+<   "data_reserva": "2026-11-12",
+<   "turno": "tarde",
+<   "responsavel": "Grupo A",
+<   "quantidade_pessoas": 20,
+<   "finalidade": "Aula prática Full Stack",
+<   "id": 2
+< }
+
+### Q12 - PUT alterando apenas o responsável
+[2026-11-04 22:04:10]
+> PUT http://127.0.0.1:8000/api/reservas/2
+> Content-Type: application/json
+> {"laboratorio": "Laboratório 202", "data_reserva": "2026-11-12", "turno": "tarde", "responsavel": "Grupo C", "quantidade_pessoas": 20, "finalidade": "Aula prática Full Stack"}
+< HTTP 200 OK
+< content-type: application/json
+< content-length: 173
+< {
+<   "laboratorio": "Laboratório 202",
+<   "data_reserva": "2026-11-12",
+<   "turno": "tarde",
+<   "responsavel": "Grupo C",
+<   "quantidade_pessoas": 20,
+<   "finalidade": "Aula prática Full Stack",
+<   "id": 2
+< }
+

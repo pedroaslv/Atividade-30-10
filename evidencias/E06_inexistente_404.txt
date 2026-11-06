@@ -1,0 +1,10 @@
+### Q9 - consulta de id inexistente
+[2026-11-04 22:04:10]
+> GET http://127.0.0.1:8000/api/reservas/9999
+< HTTP 404 Not Found
+< content-type: application/json
+< content-length: 36
+< {
+<   "detail": "Reserva não encontrada"
+< }
+
